@@ -5,8 +5,9 @@ set(CMAKE_CXX_STANDARD 17)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 
 file(GLOB_RECURSE SOURCES
-    src/*.cpp
-    src/*.c
+    src/main.cpp
+    src/**/*.cpp
+    src/**/*.c
 )
 
 add_library(stb_image STATIC vendors/stb/stb_image.c)
@@ -29,6 +30,7 @@ target_include_directories(${PROJECT_NAME} PRIVATE
     ${CMAKE_SOURCE_DIR}/src
     ${CMAKE_SOURCE_DIR}/vendors/stb
     ${CMAKE_SOURCE_DIR}/vendors/glad/include
+    ${CMAKE_SOURCE_DIR}/vendors/glfw/include
     ${CMAKE_SOURCE_DIR}/vendors/assimp/include
 )
 

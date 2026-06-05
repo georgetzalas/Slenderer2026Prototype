@@ -25,6 +25,7 @@ public:
     int GetWidth();
     int GetHeight();
     std::string& GetTitle();
+    GLFWwindow* GetWindow();
 
 private:
     Window();

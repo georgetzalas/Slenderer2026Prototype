@@ -93,6 +93,11 @@ std::string& Core::Window::GetTitle()
     return title;
 }
 
+GLFWwindow* Core::Window::GetWindow()
+{
+    return window;
+}
+
 void Core::Window::Destroy()
 {
     glfwDestroyWindow(window);

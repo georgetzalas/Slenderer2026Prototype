@@ -4,8 +4,9 @@ project(Slenderer2026Prototype LANGUAGES C CXX)
 set(CMAKE_CXX_STANDARD 17)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 
-file(GLOB SOURCES
-    main.cpp
+file(GLOB_RECURSE SOURCES
+    src/*.cpp
+    src/*.c
 )
 
 add_library(stb_image STATIC vendors/stb/stb_image.c)

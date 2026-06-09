@@ -120,13 +120,35 @@ void Importer::AssetManager::ProcessMesh(aiMesh* mesh, const aiScene* scene)
 
     }
 
+    ProcessMaterial(mesh, scene, mat);
+
+    model.meshes.push_back(m);
+}
+
+void Importer::AssetManager::ProcessMaterial(aiMesh* mesh, const aiScene* scene, Material& mat)
+{
     aiMaterial* material = scene->mMaterials[mesh->mMaterialIndex];
     aiString name;
 
-    material->GetTexture(aiTextureType_DIFFUSE, 0, &name);
-    Texture* texture = LoadTexture(model.path + name.C_Str());
-    mat.texture = texture;
-    m.material = mat;
+    int diffuseCount = material->GetTextureCount(aiTextureType_DIFFUSE);
+    if(diffuseCount >= 0)
+    {
+        material->GetTexture(aiTextureType_DIFFUSE, 0, &name);
+        mat.albedo = LoadTexture(model.path + name.C_Str());
+    }
 
-    model.meshes.push_back(m);
+    int specularCount = material->GetTextureCount(aiTextureType_SPECULAR);
+    if(specularCount >= 0)
+    {
+        material->GetTexture(aiTextureType_SPECULAR, 0, &name);
+        mat.specular = LoadTexture(model.path + name.C_Str());
+    }
+
+    int heightCount = material->GetTextureCount(aiTextureType_HEIGHT);
+    if(heightCount >= 0)
+    {
+        material->GetTexture(aiTextureType_HEIGHT, 0, &name);
+        mat.normal = LoadTexture(model.path + name.C_Str());
+    }
+
 }

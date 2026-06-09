@@ -34,7 +34,7 @@ private:
 
     void ProcessNode(aiNode* node, const aiScene* scene);
     void ProcessMesh(aiMesh* mesh, const aiScene* scene);
-
+    void ProcessMaterial(aiMesh* mesh, const aiScene* scene, Material& mat);
 private:
     Model model;
 

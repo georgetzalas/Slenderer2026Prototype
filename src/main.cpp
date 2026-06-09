@@ -12,6 +12,7 @@ int main()
     Importer::AssetManager::GetInstance().LoadModel("/home/flektos/Downloads/backpack_obj/backpack.obj");
     
     
+    
     while(Core::Window::GetInstance().IsOpen())
     {
         Core::Input::GetInstance().Update();

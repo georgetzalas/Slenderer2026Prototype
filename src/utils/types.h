@@ -27,7 +27,10 @@ struct Texture
 
 struct Material
 {
-    Texture* texture;
+    Texture* albedo;
+    Texture* specular;
+    Texture* roughness;
+    Texture* normal;
 };
 
 struct Mesh
@@ -37,7 +40,6 @@ struct Mesh
 
     Material material;
 };
-
 
 struct Model
 {

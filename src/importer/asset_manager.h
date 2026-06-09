@@ -10,7 +10,7 @@
 #include <assimp/scene.h>
 #include <assimp/postprocess.h>
 #include <utils/util.h>
-#include <stb/stb_image.h>
+#include <stb_image.h>
 #include <cstdint>
 
 namespace Importer{
@@ -20,7 +20,7 @@ public:
     static AssetManager& GetInstance();
 
     void LoadModel(const std::string& path);
-    void LoadTexture(const std::string& path);
+    Texture* LoadTexture(const std::string& path);
     //void LoadShader(const std::string& vertexPath, const std::string& fragmentPath);
 
 private:

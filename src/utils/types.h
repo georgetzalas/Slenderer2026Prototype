@@ -17,12 +17,6 @@ struct Vertex
     glm::vec3 bitangent;
 };
 
-struct Mesh
-{
-    std::vector<Vertex> vertices;
-    std::vector<Index> indices;
-};
-
 struct Texture
 {
     int width;
@@ -31,8 +25,23 @@ struct Texture
     u_char* data;
 };
 
+struct Material
+{
+    Texture* texture;
+};
+
+struct Mesh
+{
+    std::vector<Vertex> vertices;
+    std::vector<Index> indices;
+
+    Material material;
+};
+
+
 struct Model
 {
     std::string name;
+    std::string path;
     std::vector<Mesh> meshes;
 };

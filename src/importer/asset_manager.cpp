@@ -9,7 +9,7 @@ Importer::AssetManager& Importer::AssetManager::GetInstance()
 void Importer::AssetManager::LoadModel(const std::string& path)
 {
     Assimp::Importer importer;
-    const aiScene* scene = importer.ReadFile(path, aiProcess_Triangulate | aiProcess_FlipUVs);
+    const aiScene* scene = importer.ReadFile(path, aiProcess_Triangulate | aiProcess_FlipUVs | aiProcess_CalcTangentSpace);
 
     if(!scene || scene->mFlags & AI_SCENE_FLAGS_INCOMPLETE || !scene->mRootNode)
     {
@@ -18,31 +18,40 @@ void Importer::AssetManager::LoadModel(const std::string& path)
     }
 
     model.name.clear();
+    model.path.clear();
     model.meshes.clear();
 
     std::string name = Util::GetFileNameFromPath(path);
 
     model.name = name;
+    model.path = Util::GetDirectoryFromPath(path);
 
     ProcessNode(scene->mRootNode, scene);
 
     models.insert({name, std::make_unique<Model>(model)});
 }
 
-void Importer::AssetManager::LoadTexture(const std::string& path)
+Texture* Importer::AssetManager::LoadTexture(const std::string& path)
 {
-    Texture texture;
+    auto it = textures.find(Util::GetFileNameFromPath(path));
+    
+    if(it != textures.end())
+        return it->second.get();
 
-    u_char* data = stbi_load(path.c_str(), &texture.width, &texture.height, &texture.channels);
+    std::unique_ptr<Texture> texture = std::make_unique<Texture>();
 
-    if(!data)
+    texture->data = stbi_load(path.c_str(), &texture->width, &texture->height, &texture->channels, 0);
+
+    if(!texture->data)
     {
         std::cerr << "[STB ERROR] Error on loading image" << std::endl;
     }
 
-    texture.data = data;
+    Texture* result = texture.get();
 
-    textures.insert({Util::GetFileNameFromPath(path), std::make_unique<Texture>(texture)});
+    textures.insert({Util::GetFileNameFromPath(path), std::move(texture)});
+
+    return result;
 }
 
 void Importer::AssetManager::ProcessNode(aiNode* node, const aiScene* scene)
@@ -63,6 +72,7 @@ void Importer::AssetManager::ProcessMesh(aiMesh* mesh, const aiScene* scene)
 {
     Mesh m;
     Vertex v;
+    Material mat;
 
     for(int i=0; i<mesh->mNumVertices; i++)
     {
@@ -109,5 +119,14 @@ void Importer::AssetManager::ProcessMesh(aiMesh* mesh, const aiScene* scene)
         }
 
     }
+
+    aiMaterial* material = scene->mMaterials[mesh->mMaterialIndex];
+    aiString name;
+
+    material->GetTexture(aiTextureType_DIFFUSE, 0, &name);
+    Texture* texture = LoadTexture(model.path + name.C_Str());
+    mat.texture = texture;
+    m.material = mat;
+
     model.meshes.push_back(m);
 }

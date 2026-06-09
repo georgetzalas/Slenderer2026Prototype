@@ -9,7 +9,8 @@ int main()
 
     Core::Window::GetInstance().Init();
     Core::Input::GetInstance().Init();
-    Importer::AssetManager::GetInstance().LoadModel("/home/flektos/Documents/Slenderer2025/res/objs/backpack.obj");
+    Importer::AssetManager::GetInstance().LoadModel("/home/flektos/Downloads/backpack_obj/backpack.obj");
+    
     
     while(Core::Window::GetInstance().IsOpen())
     {

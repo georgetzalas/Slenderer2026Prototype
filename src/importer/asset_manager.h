@@ -19,9 +19,12 @@ class AssetManager
 public:
     static AssetManager& GetInstance();
 
-    void LoadModel(const std::string& path);
+    Model* LoadModel(const std::string& path);
     Texture* LoadTexture(const std::string& path);
     //void LoadShader(const std::string& vertexPath, const std::string& fragmentPath);
+
+    Model* GetModel(const std::string& name);
+    Texture* GetTexture(const std::string& name);
 
 private:
     AssetManager() = default;
@@ -32,12 +35,10 @@ private:
     AssetManager(AssetManager&&) = delete;
     AssetManager& operator=(AssetManager&&) = delete;
 
-    void ProcessNode(aiNode* node, const aiScene* scene);
-    void ProcessMesh(aiMesh* mesh, const aiScene* scene);
-    void ProcessMaterial(aiMesh* mesh, const aiScene* scene, Material& mat);
+    void ProcessNode(aiNode* node, const aiScene* scene, Model* model);
+    void ProcessMesh(aiMesh* mesh, const aiScene* scene, Model* model);
+    void ProcessMaterial(aiMesh* mesh, const aiScene* scene, Model* model, Material& material);
 private:
-    Model model;
-
     std::unordered_map<std::string, std::unique_ptr<Model>> models;
     std::unordered_map<std::string, std::unique_ptr<Texture>> textures;
 };

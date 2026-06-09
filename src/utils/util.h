@@ -1,4 +1,4 @@
-#pragma oncle
+#pragma once
 
 #include <string>
 

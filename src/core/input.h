@@ -1,8 +1,8 @@
 #pragma once
 
-#include <GLFW/glfw3.h>
 #include <cstdint>
 #include <core/window.h>
+#include <GLFW/glfw3.h>
 
 constexpr int KEYBOARD_KEYS = 1024;
 constexpr int MOUSE_KEYS    = 32;
@@ -43,7 +43,7 @@ public:
     void EnableCursor();
 
 private:
-    Input();
+    Input() = default;
 
     Input(const Input&) = delete;
     Input& operator=(const Input&) = delete;

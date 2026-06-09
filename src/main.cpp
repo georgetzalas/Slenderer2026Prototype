@@ -1,22 +1,25 @@
 #include <iostream>
 #include <core/window.h>
+#include <core/input.h>
+#include <importer/asset_manager.h>
 
 int main()
 {
     std::cout << "Slenderer 2026" << std::endl;
 
     Core::Window::GetInstance().Init();
+    Core::Input::GetInstance().Init();
+    Importer::AssetManager::GetInstance().LoadModel("/home/flektos/Documents/Slenderer2025/res/objs/backpack.obj");
     
     while(Core::Window::GetInstance().IsOpen())
     {
-
-        int width = Core::Window::GetInstance().GetWidth();
-        std::cout << width << std::endl;
+        Core::Input::GetInstance().Update();
 
         Core::Window::GetInstance().SwapBuffers();
         Core::Window::GetInstance().PollEvents();
     }
 
+    Core::Input::GetInstance().Destroy();
     Core::Window::GetInstance().Destroy();
 
     return 0;

@@ -11,7 +11,7 @@ void Core::Input::ScrollCallback(GLFWwindow* window, double xoffset, double yoff
     Core::Input::GetInstance().SetYScrollOffset(yoffset);
 }
 
-Core::Input::Input()
+void Core::Input::Init()
 {
 	glfwSetScrollCallback(Core::Window::GetInstance().GetWindow(), Core::Input::ScrollCallback);
     glfwSetInputMode(Core::Window::GetInstance().GetWindow(), GLFW_CURSOR, GLFW_CURSOR_NORMAL);
@@ -44,7 +44,7 @@ bool Core::Input::IsKeyboardKeyPressed(uint32_t key)
 {
     if(key >= KEYBOARD_KEYS)
     {
-        std::cerr << "Key out of range" << std::endl;
+        std::cerr << "[INPUT ERROR] Key out of range" << std::endl;
         return false;
     }
     return keyboardKeysPressed[key];
@@ -54,7 +54,7 @@ bool Core::Input::IsKeyboardKeyDown(uint32_t key)
 {
     if(key >= KEYBOARD_KEYS)
     {
-        std::cerr << "Key out of range" << std::endl;
+        std::cerr << "[INPUT ERROR] Key out of range" << std::endl;
         return false;
     }
     return keyboardKeysDown[key];
@@ -64,7 +64,7 @@ bool Core::Input::IsMouseKeyPressed(uint32_t key)
 {
     if(key >= MOUSE_KEYS)
     {
-        std::cerr << "Key out of range" << std::endl;
+        std::cerr << "[INPUT ERROR] Key out of range" << std::endl;
         return false;
     }
     return mouseKeysPressed[key];
@@ -74,7 +74,7 @@ bool Core::Input::IsMouseKeyDown(uint32_t key)
 {
     if(key >= MOUSE_KEYS)
     {
-        std::cerr << "Key out of range" << std::endl;
+        std::cerr << "[INPUT ERROR] Key out of range" << std::endl;
         return false;
     }
     return mouseKeysDown[key];

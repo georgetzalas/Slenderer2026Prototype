@@ -6,8 +6,8 @@ set(CMAKE_CXX_STANDARD_REQUIRED ON)
 
 file(GLOB_RECURSE SOURCES
     src/main.cpp
-    src/**/*.cpp
-    src/**/*.c
+    src/*/*.cpp
+    src/*/*.c
 )
 
 add_library(stb_image STATIC vendors/stb/stb_image.c)
@@ -24,6 +24,10 @@ set(ASSIMP_BUILD_ASSIMP_TOOLS OFF CACHE BOOL "" FORCE)
 set(BUILD_SHARED_LIBS OFF CACHE BOOL "" FORCE)
 add_subdirectory(vendors/assimp)
 
+set(GLM_BUILD_TESTS OFF CACHE BOOL "" FORCE)
+set(BUILD_SHARED_LIBS OFF CACHE BOOL "" FORCE)
+add_subdirectory(vendors/glm)
+
 add_executable(${PROJECT_NAME} ${SOURCES})
 
 target_include_directories(${PROJECT_NAME} PRIVATE
@@ -32,6 +36,7 @@ target_include_directories(${PROJECT_NAME} PRIVATE
     ${CMAKE_SOURCE_DIR}/vendors/glad/include
     ${CMAKE_SOURCE_DIR}/vendors/glfw/include
     ${CMAKE_SOURCE_DIR}/vendors/assimp/include
+    ${CMAKE_SOURCE_DIR}/vendors/glm/glm
 )
 
 target_link_libraries(${PROJECT_NAME} PRIVATE
@@ -39,6 +44,7 @@ target_link_libraries(${PROJECT_NAME} PRIVATE
     glad
     stb_image
     assimp
+    glm
 )
 
 if(WIN32)

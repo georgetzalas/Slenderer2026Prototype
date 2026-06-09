@@ -2,6 +2,7 @@
 #include <core/window.h>
 #include <core/input.h>
 #include <importer/asset_manager.h>
+#include <scene/scene.h>
 
 int main()
 {
@@ -11,9 +12,16 @@ int main()
     Core::Input::GetInstance().Init();
     Model* model = Importer::AssetManager::GetInstance().LoadModel("/home/flektos/Downloads/backpack_obj/backpack.obj");
     
+    Scene::Scene scene;
+    
+    Entity* e1 = scene.AddEntity("E1");
+    e1->model = model;
+    
     while(Core::Window::GetInstance().IsOpen())
     {
         Core::Input::GetInstance().Update();
+
+        scene.Update();
 
         Core::Window::GetInstance().SwapBuffers();
         Core::Window::GetInstance().PollEvents();

@@ -25,7 +25,10 @@ void Scene::Scene::Update()
 
 void Scene::Scene::Render()
 {
-
+    for(int i=0; i<entities.size(); i++)
+    {
+        Renderer::GetInstance().DrawEntity(entities[i], camera);
+    }
 }
 
 Entity* Scene::Scene::AddEntity(const std::string& name)

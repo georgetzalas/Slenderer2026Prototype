@@ -8,6 +8,7 @@
 #include <scene/camera.h>
 #include <scene/entity.h>
 #include <utils/types.h>
+#include <renderer/renderer.h>
 
 namespace Scene{
 class Scene

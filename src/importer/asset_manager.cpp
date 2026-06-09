@@ -14,7 +14,7 @@ Model* Importer::AssetManager::LoadModel(const std::string& path)
         return it->second.get();
 
     Assimp::Importer importer;
-    const aiScene* scene = importer.ReadFile(path, aiProcess_Triangulate | aiProcess_FlipUVs | aiProcess_CalcTangentSpace);
+    const aiScene* scene = importer.ReadFile(path, aiProcess_Triangulate | aiProcess_CalcTangentSpace | aiProcess_FlipUVs);
 
     if(!scene || scene->mFlags & AI_SCENE_FLAGS_INCOMPLETE || !scene->mRootNode)
     {
@@ -29,6 +29,7 @@ Model* Importer::AssetManager::LoadModel(const std::string& path)
 
     model->name = name;
     model->path = Util::GetDirectoryFromPath(path);
+    model->id   = modelID++;
 
     ProcessNode(scene->mRootNode, scene, rawModel);
 
@@ -46,13 +47,16 @@ Texture* Importer::AssetManager::LoadTexture(const std::string& path)
 
     std::unique_ptr<Texture> texture = std::make_unique<Texture>();
 
+    stbi_set_flip_vertically_on_load(true);
     texture->data = stbi_load(path.c_str(), &texture->width, &texture->height, &texture->channels, 0);
-
+    
     if(!texture->data)
     {
         std::cerr << "[ASSETMANAGER ERROR] Error on loading image" << std::endl;
         return nullptr;
     }
+
+    texture->id = textureID++;
 
     Texture* rawTexture = texture.get();
 
@@ -130,6 +134,7 @@ void Importer::AssetManager::ProcessMesh(aiMesh* mesh, const aiScene* scene, Mod
     ProcessMaterial(mesh, scene, model, mat);
 
     m.material = mat;
+    m.id       = meshID++;
 
     model->meshes.push_back(m);
 }

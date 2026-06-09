@@ -6,6 +6,7 @@ set(CMAKE_CXX_STANDARD_REQUIRED ON)
 
 file(GLOB_RECURSE SOURCES
     src/main.cpp
+    src/shader.cpp
     src/*/*.cpp
     src/*/*.c
 )

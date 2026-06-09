@@ -6,7 +6,8 @@
 #include <memory>
 #include <string>
 
-typedef uint64_t Index;
+typedef uint32_t Index;
+typedef uint64_t ID;
 
 struct Vertex
 {
@@ -19,6 +20,7 @@ struct Vertex
 
 struct Texture
 {
+    ID id;
     int width;
     int height;
     int channels;
@@ -35,6 +37,7 @@ struct Material
 
 struct Mesh
 {
+    ID id;
     std::vector<Vertex> vertices;
     std::vector<Index> indices;
 
@@ -43,6 +46,7 @@ struct Mesh
 
 struct Model
 {
+    ID id;
     std::string name;
     std::string path;
     std::vector<Mesh> meshes;

@@ -39,6 +39,10 @@ private:
     void ProcessMesh(aiMesh* mesh, const aiScene* scene, Model* model);
     void ProcessMaterial(aiMesh* mesh, const aiScene* scene, Model* model, Material& material);
 private:
+    ID modelID    = 0;
+    ID meshID     = 0;
+    ID textureID  = 0;
+
     std::unordered_map<std::string, std::unique_ptr<Model>> models;
     std::unordered_map<std::string, std::unique_ptr<Texture>> textures;
 };
